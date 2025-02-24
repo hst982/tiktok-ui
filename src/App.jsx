@@ -1,33 +1,38 @@
-import { Routes, Route, Link } from 'react-router'
-import HomePage from './pages/Home'
-import ContactsPage from './pages/Contacts'
-import NewsPage from './pages/News'
-import './App.css'
+import { Fragment } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router";
+import { publicRoutes } from "@/routes";
+import { DefaultLayout } from "@layouts";
 
 function App() {
-
   return (
-    <div className="app">
-      <nav className="navBar">
-        <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/Contacts">Contacts</Link>
-          </li>
-          <li>
-            <Link to="/News">News</Link>
-          </li>
-        </ul>
-      </nav>
-      <Routes>
-        <Route path='/' element={<HomePage/>} />
-        <Route path='/Contacts' element={<ContactsPage/>} />
-        <Route path='/News' element={<NewsPage/>} />
-      </Routes>
-    </div>
-  )
+    <Router>
+      <div className="app">
+        <Routes>
+          {publicRoutes.map((route, index) => {
+            const Page = route.component
+
+            let Layout = DefaultLayout
+            if(route.layout) {
+              Layout = route.layout
+            }else if(route.layout === null) {
+              Layout = Fragment
+            }
+            return (
+              <Route
+                key={index}
+                path={route.path}
+                element={
+                  <Layout>
+                    <Page />
+                  </Layout>
+                }
+              />
+            );
+          })}
+        </Routes>
+      </div>
+    </Router>
+  );
 }
 
-export default App
+export default App;
