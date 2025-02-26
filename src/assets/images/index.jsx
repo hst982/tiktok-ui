@@ -1,6 +1,8 @@
-import logo from '@assets/images/logo.svg'
+import logo from "@assets/images/logo.svg";
+import noImage from "@assets/images/noimage.webp";
 const images = {
-    logo
-}
+  logo,
+  noImage,
+};
 
-export default images
+export default images;
