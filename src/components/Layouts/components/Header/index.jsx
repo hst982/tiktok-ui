@@ -1,9 +1,6 @@
-import { useEffect, useState } from "react";
-import classNames from "classnames/bind";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import classNames from 'classnames/bind'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
-  faCircleXmark,
-  faSpinner,
   faEllipsisVertical,
   faEarthAsia,
   faCircleQuestion,
@@ -12,159 +9,118 @@ import {
   faGear,
   faUser,
   faSignOut,
-} from "@fortawesome/free-solid-svg-icons";
-import Tippy from "@tippyjs/react/";
-import HeadlessTippy from "@tippyjs/react/headless";
+} from '@fortawesome/free-solid-svg-icons'
+import Tippy from '@tippyjs/react/'
+import { Link } from 'react-router'
 
-import Button from "@components/Button";
-import { Wrapper as PopperWrapper } from "@components/Popper";
-import styles from "./Header.module.scss";
-import images from "@assets/images";
-import AccountItem from "@components/AccountItem";
-import Menu from "@components/Popper/Menu";
-import {
-  UploadIcon,
-  InboxIcon,
-  MessageIcon,
-  SearchIcon,
-} from "@components/Icons";
-import Image from "@components/Images";
+import Button from '@components/Button'
+import styles from './Header.module.scss'
+import images from '@assets/images'
+import Menu from '@components/Popper/Menu'
+import { UploadIcon, InboxIcon, MessageIcon } from '@components/Icons'
+import Image from '@components/Images'
+import Search from '../Search'
 
-const cx = classNames.bind(styles);
+const cx = classNames.bind(styles)
 
 const MENU_ITEMS = [
   {
     icon: <FontAwesomeIcon icon={faEarthAsia} />,
-    title: "English",
+    title: 'English',
     children: {
-      title: "language",
+      title: 'language',
       data: [
         {
-          type: "language",
-          code: "en",
-          title: "English",
+          type: 'language',
+          code: 'en',
+          title: 'English',
         },
         {
-          type: "language",
-          code: "vi",
-          title: "Tiếng Việt",
+          type: 'language',
+          code: 'vi',
+          title: 'Tiếng Việt',
         },
       ],
     },
   },
   {
     icon: <FontAwesomeIcon icon={faCircleQuestion} />,
-    title: "Feedback and help",
-    to: "/feedback",
+    title: 'Feedback and help',
+    to: '/feedback',
   },
   {
     icon: <FontAwesomeIcon icon={faKeyboard} />,
-    title: "Keyboard shortcuts",
+    title: 'Keyboard shortcuts',
   },
-];
+]
 
 const handleMenuChange = (menuItem) => {
   switch (menuItem.type) {
-    case "language":
-      break;
+    case 'language':
+      break
 
     default:
-      break;
+      break
   }
-};
+}
 
 function Header() {
-  const [searchResult, setSearchResult] = useState([]);
-  useEffect(() => {
-    setTimeout(() => {
-      setSearchResult([]);
-    }, 0);
-  });
-
-  const currentUser = true;
+  const currentUser = true
 
   const userMenu = [
     {
       icon: <FontAwesomeIcon icon={faUser} />,
-      title: "View profile",
-      to: "/userss",
+      title: 'View profile',
+      to: '/userss',
     },
     {
       icon: <FontAwesomeIcon icon={faCoins} />,
-      title: "Get coins",
-      to: "coin",
+      title: 'Get coins',
+      to: 'coin',
     },
     {
       icon: <FontAwesomeIcon icon={faGear} />,
-      title: "Setting",
-      to: "/setting",
+      title: 'Setting',
+      to: '/setting',
     },
     ...MENU_ITEMS,
     {
       icon: <FontAwesomeIcon icon={faSignOut} />,
-      title: "Log out",
-      to: "/logout",
+      title: 'Log out',
+      to: '/logout',
       separate: true,
     },
-  ];
+  ]
 
   return (
-    <header className={cx("wrapper")}>
-      <div className={cx("inner")}>
-        <div className={cx("logo")}>
-          <a href="/">
+    <header className={cx('wrapper')}>
+      <div className={cx('inner')}>
+        <div className={cx('logo')}>
+          <Link to="/">
             <img src={images.logo} alt="Tik Tok" />
-          </a>
+          </Link>
         </div>
 
-        <HeadlessTippy
-          interactive
-          visible={searchResult.length > 0}
-          render={(attrs) => (
-            <div className={cx("search-result")} tabIndex="-1" {...attrs}>
-              <PopperWrapper>
-                <h4 className={cx("search-title")}>Accounts</h4>
-                <AccountItem />
-                <AccountItem />
-                <AccountItem />
-                <AccountItem />
-              </PopperWrapper>
-            </div>
-          )}
-        >
-          <div className={cx("search")}>
-            <input
-              type="text"
-              placeholder="Search accounts and videos"
-              spellCheck={false}
-            />
-            <button className={cx("clear")}>
-              <FontAwesomeIcon icon={faCircleXmark} />
-            </button>
-            <FontAwesomeIcon className={cx("loading")} icon={faSpinner} />
-            <button className={cx("search-btn")}>
-              <SearchIcon />
-            </button>
-          </div>
-        </HeadlessTippy>
+        {/* search */}
+        <Search />
 
-        <div className={cx("action")}>
+        <div className={cx('action')}>
           {currentUser ? (
             <>
               <Tippy delay={[0, 200]} content="Upload video">
-                <button className={cx("action-btn")}>
+                <button className={cx('action-btn')}>
                   <UploadIcon />
                 </button>
               </Tippy>
 
               <Tippy delay={[0, 200]} content="Message">
-                <button className={cx("action-btn")}>
+                <button className={cx('action-btn')}>
                   <MessageIcon />
                 </button>
               </Tippy>
 
               <Tippy delay={[0, 200]} content="Inbox">
-                <button className={cx("action-btn")}>
+                <button className={cx('action-btn')}>
                   <InboxIcon />
                 </button>
               </Tippy>
@@ -181,12 +137,12 @@ function Header() {
           >
             {currentUser ? (
               <Image
-                className={cx("user-avatar")}
+                className={cx('user-avatar')}
                 src="https://p16-sign-sg.tiktokcdn.com/tos-alisg-avt-0068/67b5b4971d85cd62e8acd165391c306b~tplv-tiktokx-cropcenter:100:100.jpeg?dr=14579&nonce=63170&refresh_token=11f39aeeabd85c04a60173c4d22cc3b6&x-expires=1740574800&x-signature=CS9jNpY8o8YBliFrITPQqya30E4%3D&idc=my&ps=13740610&shcp=81f88b70&shp=a5d48078&t=4d5b0474"
                 alt="aaaaa"
               />
             ) : (
-              <button className={cx("more-btn")}>
+              <button className={cx('more-btn')}>
                 <FontAwesomeIcon icon={faEllipsisVertical} />
               </button>
             )}
@@ -194,7 +150,7 @@ function Header() {
         </div>
       </div>
     </header>
-  );
+  )
 }
 
-export default Header;
+export default Header
