@@ -20,6 +20,7 @@ import Menu from '@components/Popper/Menu'
 import { UploadIcon, InboxIcon, MessageIcon } from '@components/Icons'
 import Image from '@components/Images'
 import Search from '../Search'
+import config from '@/config'
 
 const cx = classNames.bind(styles)
 
@@ -28,7 +29,7 @@ const MENU_ITEMS = [
     icon: <FontAwesomeIcon icon={faEarthAsia} />,
     title: 'English',
     children: {
-      title: 'language',
+      title: 'Language',
       data: [
         {
           type: 'language',
@@ -96,7 +97,7 @@ function Header() {
     <header className={cx('wrapper')}>
       <div className={cx('inner')}>
         <div className={cx('logo')}>
-          <Link to="/">
+          <Link to={config.routes.home} className={cx('logo-link')}>
             <img src={images.logo} alt="Tik Tok" />
           </Link>
         </div>
@@ -134,6 +135,7 @@ function Header() {
           <Menu
             items={currentUser ? userMenu : MENU_ITEMS}
             onChange={handleMenuChange}
+            hideOnClick="false"
           >
             {currentUser ? (
               <Image
